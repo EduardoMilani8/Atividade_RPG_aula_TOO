@@ -63,12 +63,14 @@ class Missao:
         else:
             print(f"A missão '{self.__nome}' não pode ser iniciada pois está com status: {self.__status.name}")
 
-    def concluir_missao(self):
+    def concluir_missao(self, valor):
         if self.__status == Status.EM_ANDAMENTO:
             self.__status = Status.CONCLUIDA
             print(f"Missão '{self.__nome}' concluída com sucesso! Recompensa é {self.__recompensa}.")
+            return True
         else:
             print(f"A missão '{self.__nome}' não pode ser concluída pois está: {self.__status.name}")
+            return False
 
 # o property é um decorador que transforma um método em um atributo, permitindo acessar o valor do atributo de forma mais simples e intuitiva.
 # O setter é um método que permite definir o valor de um atributo, e pode incluir validações para garantir que o valor seja válido.
@@ -81,3 +83,5 @@ class Missao:
 
 #self.__status retorna status.EM ANDAMENTO
 #self.__status.name retorna EM ANDAMENTO
+
+#o que mudei no concluir missao (branch assosiacao), add parametro valor vai servir para validar o progresso, se true da sucesso, se false da falha

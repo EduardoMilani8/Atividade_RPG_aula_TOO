@@ -4,6 +4,7 @@ class Personagem:
         self.__nivel = 1
         self.__xp = 0
         self.__vida = 100
+        self.__missoes = []
     
     @property 
     def nome(self):
@@ -36,4 +37,19 @@ class Personagem:
         print(f"Nível: {self.__nivel}")
         print(f"XP: {self.__xp}")
         print(f"Vida: {self.__vida}")
-    
+
+    def add_missao(self, missao): 
+        if missao in self.__missoes:
+            print(f"A missão '{missao.nome}' já está na lista!")
+            return
+        self.__missoes.append(missao)
+        missao.iniciar_missao()
+
+    def concluir_missao(self, missao, valor):
+        if missao not in self.__missoes:
+            print(f"A missão '{missao.nome}' não está na lista do personagem!")
+            return
+        resultado = missao.concluir_missao(valor)
+        if resultado:
+            self.__xp += missao.recompensa
+            print(f"XP recebido: {missao.recompensa} | XP total: {self.__xp}")
