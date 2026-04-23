@@ -1,3 +1,5 @@
+from missao import Missao
+
 class Personagem:
     def __init__(self, nome):
         self.__nome = nome
@@ -53,3 +55,7 @@ class Personagem:
         if resultado:
             self.__xp += missao.recompensa
             print(f"XP recebido: {missao.recompensa} | XP total: {self.__xp}")
+
+#adicionar o ganho de xp e upgrade de nivel e ganho de vida
+#adicionar perca de vida ao fracassar em uma missao (dentro de personagem isso)
+#adicionar perca de vida mesmo que a missao de sucesso 

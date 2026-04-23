@@ -1,6 +1,8 @@
 from status import Status
+from abc import abstractmethod, ABC #é um metodo que vou obrigar classe filhas a terem os metodos da classe mae, usando o @abstractmethod
+                                    #neste caso eu digo que que a classe missao tem o ABC e algum metodo dela (neste caso o concluir missao) precisa estar obrigatoriamente em todas as filhas dessa classe
 
-class Missao:
+class Missao(ABC):
     def __init__(self, nome, descricao, recompensa, status=Status.PENDENTE): #troquei a string "PENDENTE" pelo enum 1234 de antes
         self.__nome = nome
         self.__descricao = descricao
@@ -63,7 +65,10 @@ class Missao:
         else:
             print(f"A missão '{self.__nome}' não pode ser iniciada pois está com status: {self.__status.name}")
 
+    @abstractmethod
     def concluir_missao(self, valor):
+        pass
+        '''
         if self.__status == Status.EM_ANDAMENTO:
             self.__status = Status.CONCLUIDA
             print(f"Missão '{self.__nome}' concluída com sucesso! Recompensa é {self.__recompensa}.")
@@ -71,6 +76,7 @@ class Missao:
         else:
             print(f"A missão '{self.__nome}' não pode ser concluída pois está: {self.__status.name}")
             return False
+        '''
 
 # o property é um decorador que transforma um método em um atributo, permitindo acessar o valor do atributo de forma mais simples e intuitiva.
 # O setter é um método que permite definir o valor de um atributo, e pode incluir validações para garantir que o valor seja válido.

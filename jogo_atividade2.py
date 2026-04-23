@@ -43,6 +43,7 @@ print ("---")
 
 m21.iniciar_missao()
 p1.concluir_missao(m21, 3)
+m21.exibir_dados()
 
 print ("---")
 
