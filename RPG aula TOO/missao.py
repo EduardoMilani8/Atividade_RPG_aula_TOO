@@ -1,6 +1,7 @@
 from status import Status
+from abc import ABC, abstractmethod
 
-class Missao:
+class Missao(ABC):
     def __init__(self, nome, descricao, recompensa, status=Status.PENDENTE): #troquei a string "PENDENTE" pelo enum 1234 de antes
         self.__nome = nome
         self.__descricao = descricao
@@ -51,10 +52,11 @@ class Missao:
             return self.__nome == outro.__nome
 
     def exibir_dados(self):
-        print(f"Nome: {self.__nome}")
-        print(f"Descrição: {self.__descricao}")
-        print(f"Recompensa: {self.__recompensa}")
-        print(f"Status: {self.__status.name}")
+        msg = f"Nome: {self.__nome}\n"
+        msg += f"Descrição: {self.__descricao}\n"
+        msg += f"Recompensa: {self.__recompensa}\n"
+        msg += f"Status: {self.__status.name}"
+        return msg
 
     def iniciar_missao(self):
         if self.__status == Status.PENDENTE:
@@ -62,14 +64,18 @@ class Missao:
             print(f"A missão '{self.__nome}' começou! Objetivo: {self.__descricao}")
         else:
             print(f"A missão '{self.__nome}' não pode ser iniciada pois está com status: {self.__status.name}")
-
-    def concluir_missao(self):
+    @abstractmethod
+    def concluir_missao(self, valor):
+        pass
+        '''
         if self.__status == Status.EM_ANDAMENTO:
             self.__status = Status.CONCLUIDA
             print(f"Missão '{self.__nome}' concluída com sucesso! Recompensa é {self.__recompensa}.")
+            return True
         else:
             print(f"A missão '{self.__nome}' não pode ser concluída pois está: {self.__status.name}")
-
+            return False
+        '''
 # o property é um decorador que transforma um método em um atributo, permitindo acessar o valor do atributo de forma mais simples e intuitiva.
 # O setter é um método que permite definir o valor de um atributo, e pode incluir validações para garantir que o valor seja válido.
 # o __str__ é um método especial que o Python chama automaticamente quando você usa print() em um objeto. Sem ele, o print mostraria algo como <Missao object at 0x...>, que não diz nada útil.
@@ -81,3 +87,5 @@ class Missao:
 
 #self.__status retorna status.EM ANDAMENTO
 #self.__status.name retorna EM ANDAMENTO
+
+#o que mudei no concluir missao (branch assosiacao), add parametro valor vai servir para validar o progresso, se true da sucesso, se false da falha
