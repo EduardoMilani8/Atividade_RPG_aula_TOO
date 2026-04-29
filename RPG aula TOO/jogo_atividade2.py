@@ -29,7 +29,7 @@ print(m23)
 
 print ("---")
 
-p1.add_missao(m21)
+p1.add_missao(m21) #aqui a missao ja é adicionado e iniciada
 
 print ("---")
     
@@ -41,18 +41,15 @@ p1.add_missao(m23)
 
 print ("---")
 
-m21.iniciar_missao()
 p1.concluir_missao(m21, 3)
 m21.exibir_dados()
 
 print ("---")
 
-m22.iniciar_missao()
-p1.concluir_missao(m22, 1)
+p1.concluir_missao(m22, 50)
 
 print ("---")
 
-m23.iniciar_missao()
 p1.concluir_missao(m23, 50)
 
 print ("---")
@@ -61,7 +58,8 @@ print ("Teste para dar erro abaixo")
 print ("---")
 print ("---")
 
-m23.iniciar_missao()
+m23 = MissaoExploracao("Teste Fracasso", "Missão que vai fracassar", 10, "Região Teste", 100)
+p1.add_missao(m23)
 p1.concluir_missao(m23, 10)
 
 print ("---")
