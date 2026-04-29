@@ -1,9 +1,9 @@
 from missao import Missao
 from status import Status
 
-class MissaoCombate(Missao): #herda missao
+class MissaoCombate(Missao):
     def __init__(self, nome, descricao, recompensa, tipo_inimigo, inimigos_a_derrotar):
-      super().__init__(nome, descricao, recompensa)
+      super().__init__(nome, descricao, recompensa, ("ataque", inimigos_a_derrotar))
       self.__tipo_inimigo = tipo_inimigo
       self.__inimigos_a_derrotar = inimigos_a_derrotar
 
@@ -14,10 +14,10 @@ class MissaoCombate(Missao): #herda missao
         return msg  
 
     @property
-    def tipo_inimigo(self): #esse nome
+    def tipo_inimigo(self): 
         return self.__tipo_inimigo
 
-    @tipo_inimigo.setter #setter tem q ter exatamente o mesmo nome colocado no propety
+    @tipo_inimigo.setter 
     def tipo_inimigo(self, valor):
         self.__tipo_inimigo = valor
 
@@ -29,15 +29,5 @@ class MissaoCombate(Missao): #herda missao
     def inimigos_a_derrotar(self, valor):
         self.__inimigos_a_derrotar = valor
 
-            
-    def concluir_missao(self, valor):
-        if valor >= self.__inimigos_a_derrotar:
-            if self.status == Status.EM_ANDAMENTO:
-                self.status = Status.CONCLUIDA
-                return f"Missão concluida com sucesso! Recompensa de {self.recompensa} XP pronto para retirada."
-            else:
-                return f"Missão não esta em andamento."
-        else:
-            self.status = Status.FRACASSADA
-            return f"Missão fracassada! Derrotou apenas {valor} de {self.__inimigos_a_derrotar} inimigos."
-    # cada missao vai ter um concluir missao com esse esquema, so mundando os valor e o atributo que cada um valida e responde depois
+    def dano_falha(self):
+        return 10

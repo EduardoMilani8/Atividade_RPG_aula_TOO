@@ -3,7 +3,7 @@ from status import Status
 
 class MissaoColeta(Missao):
     def __init__(self, nome, descricao, recompensa, item_necessario, quantidade):
-        super().__init__(nome, descricao, recompensa)
+        super().__init__(nome, descricao, recompensa, ("vida", quantidade))
         self.__item_necessario = item_necessario
         self.__quantidade = quantidade
 
@@ -21,7 +21,6 @@ class MissaoColeta(Missao):
     def item_necessario(self, valor):
         self.__item_necessario = valor
 
-
     @property
     def quantidade(self):
         return self.__quantidade
@@ -29,15 +28,3 @@ class MissaoColeta(Missao):
     @quantidade.setter
     def quantidade(self, valor):
         self.__quantidade = valor
-
-    def concluir_missao(self, valor):
-        if valor >= self.__quantidade:
-            if self.status == Status.EM_ANDAMENTO:
-                self.status = Status.CONCLUIDA
-                return f"Missão concluída com sucesso! Recompensa de {self.recompensa} XP pronta para retirada."
-            else:
-                return f"A missão não está em andamento."
-        else:
-            self.status = Status.FRACASSADA
-            return f"Missão fracassada! Coletou apenas {valor} de {self.__quantidade} itens."
-        #verificar se coletou o suficiente, verificar o valor se deu true ou false

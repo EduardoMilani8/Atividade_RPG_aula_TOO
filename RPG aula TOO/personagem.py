@@ -25,6 +25,13 @@ class Personagem:
     @property
     def xp(self):
         return self.__xp
+    
+    @xp.setter
+    def xp(self, valor):
+        if valor < 0:
+            self.__xp = 0
+        else:
+            self.__xp = valor
 
     @property
     def vida(self):
@@ -54,7 +61,7 @@ class Personagem:
         self.__defesa = valor
     
     def __str__(self):
-        return f"Personagem: {self.__nome} | Nível: {self.__nivel} | XP: {self.__xp} | Vida: {self.__vida}"
+        return f"Personagem: {self.__nome} | Nível: {self.__nivel} | XP: {self.__xp} | Vida: {self.__vida} | Ataque: {self.__ataque} | Defesa: {self.__defesa}"
     
     def __eq__(self, outro):
         if not isinstance(outro, Personagem):

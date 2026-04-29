@@ -1,3 +1,5 @@
+from tipo_item import TipoItem
+
 class Item:
     def __init__(self, nome, descricao, tipo, atributo, nivel):
         self.__nome = nome

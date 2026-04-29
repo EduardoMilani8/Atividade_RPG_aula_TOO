@@ -8,111 +8,147 @@ Projeto desenvolvido para a disciplina de **Tecnologia de Orientação a Objetos
 
 ## Sobre o Projeto
 
-Este projeto implementa o sistema de missões do universo **"Ecos de Arcadia"**, aplicando os conceitos de Orientação a Objetos em Python:
+Este projeto aplica conceitos fundamentais de Programação Orientada a Objetos em Python:
 
-- Encapsulamento com atributos privados (`__`)
-- Getters e Setters com `@property`
-- Enum para controle de estados
-- Herança com classes filhas especializadas
-
+* Encapsulamento com atributos privados (`__`)
+* Getters e Setters com `@property`
+* Uso de `Enum` para controle de estados
+* Herança e polimorfismo com classes especializadas
+* Sistema de atributos e requisitos dinâmicos
 ---
 
-## Estrutura do Projeto
+## Fluxo do Sistema
+
+1. Criação do personagem
+2. Escolha de equipamentos (arma, vestimenta, utilitário)
+3. Aplicação dos buffs no personagem
+4. Execução das missões
+5. Atualização de vida e XP
+6. Exibição do status final
+---
+
+## Regra de Conclusão
+
+A missão é concluída automaticamente com base no personagem:
+
+**Sucesso:**
 
 ```
-RPG aula TOO/
-│
-├── status.py           # Enum com os estados das missões
-├── missao.py           # Classe mãe com regras gerais
-├── missao_combate.py   # Subclasse: missões de combate
-├── missao_coleta.py    # Subclasse: missões de coleta
-├── missao_exploracao.py# Subclasse: missões de exploração
-├── personagem.py       # Classe Personagem
-└── main.py             # Arquivo de testes
+atributo >= requisito
 ```
+
+ **Efeitos:**
+
+* Missão → `CONCLUIDA`
+* Personagem ganha XP
+
+ **Falha:**
+
+* Personagem perde vida
+* Missão permanece não concluída
+---
+
+## Sistema de Dano por Tipo
+
+| Tipo de Missão | Atributo usado | Dano ao falhar |
+| -------------- | -------------- | -------------- |
+| ⚔️ Combate     | ataque         | 10             |
+| 🛡️ Exploração  | defesa         | 3              |
+| 🎒 Coleta      | vida           | 5              |
 
 ---
 
 ## Classes
 
-### `Status` (Enum)
-Controla os estados possíveis de uma missão, evitando erros de digitação e garantindo consistência.
+###  `Status` (Enum)
 
-| Valor | Significado |
-|---|---|
-| `PENDENTE` | Missão ainda não iniciada |
-| `EM_ANDAMENTO` | Missão em progresso |
-| `CONCLUIDA` | Missão finalizada com sucesso |
-| `FRACASSADA` | Missão encerrada sem sucesso |
+Controla os estados possíveis:
+
+| Valor          | Significado                   |
+| -------------- | ----------------------------- |
+| `PENDENTE`     | Missão não iniciada           |
+| `EM_ANDAMENTO` | Missão em execução            |
+| `CONCLUIDA`    | Missão finalizada com sucesso |
+| `FRACASSADA`   | Missão falhou                 |
 
 ---
 
-### `Missao` (Classe Mãe)
-Classe base com os atributos e regras comuns a todos os tipos de missão.
+### `Missao` (Classe Base)
+
+Classe responsável pela lógica principal do sistema.
 
 **Atributos:**
-- `nome` — nome da missão (obrigatório, sem espaços extras)
-- `descricao` — descrição do objetivo
-- `recompensa` — valor em XP entre 1 e 50
-- `status` — estado atual (inicia como `PENDENTE`)
+
+* `nome`
+* `descricao`
+* `recompensa`
+* `status`
+* `requisito` → (`atributo`, valor)
 
 **Métodos:**
-- `iniciar_missao()` — muda status de `PENDENTE` para `EM_ANDAMENTO`
-- `concluir_missao()` — muda status de `EM_ANDAMENTO` para `CONCLUIDA`
-- `exibir_dados()` — exibe todos os atributos (útil para debug)
-- `__str__` — retorna resumo da missão ao usar `print()`
-- `__eq__` — compara duas missões pelo nome
 
----
-
-### `MissaoCombate` (Subclasse)
-Missões focadas em batalha. Herda tudo de `Missao` e adiciona:
-
-- `tipo_inimigo` — tipo do inimigo a ser enfrentado
-- `inimigos_a_derrotar` — quantidade de inimigos
-
----
-
-### `MissaoColeta` (Subclasse)
-Missões de extração de recursos. Herda tudo de `Missao` e adiciona:
-
-- `item_necessario` — item que deve ser coletado
-- `quantidade_item` — quantidade necessária
-
----
-
-### `MissaoExploracao` (Subclasse)
-Missões de exploração geográfica. Herda tudo de `Missao` e adiciona:
-
-- `regiao_destino` — área ou bioma a ser explorado
-- `distancia_em_km` — distância total do trajeto
-
+* `iniciar_missao()`
+* `concluir_missao(personagem)`
+* `dano_falha()`
+* `exibir_dados()`
 ---
 
 ### `Personagem`
-Representa o jogador no sistema.
+
+Representa o jogador.
 
 **Atributos:**
-- `nome` — definido pelo jogador (único com setter)
-- `nivel` — inicia em `1` (somente leitura)
-- `xp` — inicia em `0` (somente leitura)
-- `vida` — inicia em `100` (somente leitura)
+
+* `nome`
+* `nivel`
+* `xp`
+* `vida`
+* `ataque`
+* `defesa`
+---
+
+## Sistema de Equipamentos
+
+Itens aplicam bônus ao personagem:
+
+| Tipo       | Efeito  |
+| ---------- | ------- |
+| Arma       | +ataque |
+| Vestimenta | +defesa |
+| Utilitário | +vida   |
 
 ---
 
 ## Como Executar
 
 1. Clone o repositório:
+
 ```bash
 git clone https://github.com/seu-usuario/RPG-aula-TOO.git
 ```
 
-2. Acesse a pasta do projeto:
+2. Acesse a pasta:
+
 ```bash
 cd RPG-aula-TOO
 ```
 
-3. Execute o arquivo de testes:
+3. Execute:
+
 ```bash
 python main.py
 ```
+
+## Estado Atual
+
+ Sistema de itens funcional
+ Buffs aplicados corretamente
+ Missões com lógica dinâmica
+ Dano por tipo implementado
+ XP sendo aplicado corretamente
+ Fluxo completo executável
+
+
+## Autor
+
+Projeto desenvolvido por **Eduardo Milani**

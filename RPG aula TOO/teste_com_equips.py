@@ -1,5 +1,8 @@
 from equipamentos import criar_armas, criar_vestimentas, criar_utilitarios
 from personagem import Personagem
+from missao_combate import MissaoCombate
+from missao_coleta import MissaoColeta
+from missao_exploracao import MissaoExploracao
 
 #1 validar escolha (1-3)
 #2 pegar item escolhido
@@ -86,12 +89,52 @@ while True:
     else:
         print("Escolha inválida!")
 
+missao1 = MissaoCombate(
+    "Derrotar goblin",
+    "Um goblin apareceu",
+    10,
+    "Goblin",   
+    20           
+)
 
-personagem = Personagem("Joe Hendry")
+missao2 = MissaoColeta(
+    "Coletar frutas",
+    "Colete as frutas no campo",
+    10,
+    "Frutas",
+    5
+)
+
+missao3 = MissaoExploracao(
+    "O vulcão",
+    "Explore o interior do vulcão",
+    10,
+    "Interior do vulcão",
+    1,
+)
+
+personagem = Personagem("Earning Robins")
+
+print("\n=========== PERSONAGEM CRU =============")
+print(personagem)
 
 arma_escolhida.aplicar(personagem)
 vestimenta_escolhida.aplicar(personagem)
 utilitario_escolhido.aplicar(personagem)
 
-print("\n=== Status final do personagem ===")
+print("\n=========== PERSONAGEM DEPOIS DOS EQUIPAMENTOS =============")
+print(personagem)
+
+print("\n============== MISSÕES ===============")
+
+missao1.iniciar_missao()
+missao1.concluir_missao(personagem)
+
+missao2.iniciar_missao()
+missao2.concluir_missao(personagem)
+
+missao3.iniciar_missao()
+missao3.concluir_missao(personagem)
+
+print("\n=========== PERSONAGEM DEPOIS DAS MISSÕES =============")
 print(personagem)
