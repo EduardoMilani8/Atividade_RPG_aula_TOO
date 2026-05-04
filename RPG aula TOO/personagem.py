@@ -9,18 +9,24 @@ class Personagem:
         self.__missoes = []
         self.__ataque = 3
         self.__defesa = 3
+        self.inventario = []
+        self.itens_equipados = []
+
+    @property
+    def nivel(self):
+        return self.__nivel
     
-    @property 
+    @nivel.setter
+    def nivel(self, valor):
+        self.__nivel = valor
+
+    @property
     def nome(self):
         return self.__nome
     
     @nome.setter
     def nome(self, valor):
         self.__nome = valor.strip()
-
-    @property
-    def nivel(self):
-        return self.__nivel
     
     @property
     def xp(self):
@@ -93,3 +99,30 @@ class Personagem:
         if missao.status == Status.CONCLUIDA:
             self.__xp += missao.recompensa
             print(f"XP recebido: {missao.recompensa} | XP total: {self.__xp}")
+
+    def adicionar_item(self, item):
+        self.inventario.append(item)
+
+    def mostrar_inventario(self):
+        print("\n============ INVENTÁRIO ===========")
+        for i, item in enumerate(self.inventario, 1):
+            print(f"{i} - {item.nome} (+{item.atributo})")
+
+    def equipar_item(self, item):
+        self.itens_equipados.append(item)
+        item.aplicar(self)
+
+    def limpar_equipamentos(self):
+        for item in self.itens_equipados:
+            item.remover(self)
+        self.itens_equipados.clear()
+
+    def verificar_level_up(self):
+        if self.xp >= 20:
+            self.nivel += 1
+            self.xp = 0
+            self.vida += 5
+            self.ataque += 2
+            self.defesa += 2
+
+            print("\nVocê subiu de nível!")

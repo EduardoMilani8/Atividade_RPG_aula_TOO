@@ -55,3 +55,11 @@ class Item:
             personagem.defesa += self.atributo
         elif self.tipo == TipoItem.UTILITARIO: 
             personagem.vida += self.atributo
+
+    def remover(self, personagem):
+        if self.tipo == TipoItem.ARMA:
+            personagem.ataque -= self.atributo
+        elif self.tipo == TipoItem.VESTIMENTA:
+            personagem.defesa -= self.atributo
+        elif self.tipo == TipoItem.UTILITARIO:
+            personagem.vida -= self.atributo
