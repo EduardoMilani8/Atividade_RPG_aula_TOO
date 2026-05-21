@@ -1,4 +1,3 @@
-from status import Status
 
 class Personagem:
     def __init__(self, nome):
@@ -90,15 +89,11 @@ class Personagem:
         self.__missoes.append(missao)
         missao.iniciar_missao()
 
-    def concluir_missao(self, missao, valor):
+    def concluir_missao(self, missao):
         if missao not in self.__missoes:
             print(f"A missão '{missao.nome}' não está na lista do personagem!")
             return
-        resultado = missao.concluir_missao(valor)
-        print (resultado)
-        if missao.status == Status.CONCLUIDA:
-            self.__xp += missao.recompensa
-            print(f"XP recebido: {missao.recompensa} | XP total: {self.__xp}")
+        missao.concluir_missao(self)
 
     def adicionar_item(self, item):
         self.inventario.append(item)

@@ -1,23 +1,22 @@
 from missao import Missao
-from status import Status
 
 class MissaoCombate(Missao):
     def __init__(self, nome, descricao, recompensa, tipo_inimigo, inimigos_a_derrotar):
-      super().__init__(nome, descricao, recompensa, ("ataque", inimigos_a_derrotar))
-      self.__tipo_inimigo = tipo_inimigo
-      self.__inimigos_a_derrotar = inimigos_a_derrotar
+        super().__init__(nome, descricao, recompensa, ("ataque", inimigos_a_derrotar))
+        self.__tipo_inimigo = tipo_inimigo
+        self.__inimigos_a_derrotar = inimigos_a_derrotar
 
     def exibir_dados(self):
         msg = super().exibir_dados()
         msg += f"\nTipo dos inimigos: {self.__tipo_inimigo}"
         msg += f"\nObjetivo: {self.__inimigos_a_derrotar}"
-        return msg  
+        return msg
 
     @property
-    def tipo_inimigo(self): 
+    def tipo_inimigo(self):
         return self.__tipo_inimigo
 
-    @tipo_inimigo.setter 
+    @tipo_inimigo.setter
     def tipo_inimigo(self, valor):
         self.__tipo_inimigo = valor
 

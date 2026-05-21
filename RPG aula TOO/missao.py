@@ -1,12 +1,12 @@
-from status import Status
+from status import EstadoMissao, EstadoPendente
 
 class Missao:
-    def __init__(self, nome, descricao, recompensa, requisito, status=Status.PENDENTE):
+    def __init__(self, nome, descricao, recompensa, requisito):
         self.__nome = nome
         self.__descricao = descricao
         self.__recompensa = recompensa
-        self.__status = status
         self.__requisito = requisito
+        self.estado = EstadoPendente(self)
 
     @property
     def nome(self):
@@ -34,21 +34,19 @@ class Missao:
         self.__recompensa = valor
 
     @property
-    def status(self):
-        return self.__status
+    def estado(self):
+        return self.__estado
 
-    @status.setter
-    def status(self, valor):
-         if not isinstance(valor, Status): 
-              raise ValueError("O status deve ser um valor do Enum Status.")
-         self.__status = valor
+    @estado.setter
+    def estado(self, valor):
+        self.__estado = valor
 
     @property
     def requisito(self):
         return self.__requisito
 
     def __str__(self):
-        return f"Missão: {self.__nome} | Status: {self.__status.name} | Recompensa: {self.__recompensa}"
+        return f"Missão: {self.__nome} | Status: {self.estado.nome_status()} | Recompensa: {self.__recompensa}"
 
     def __eq__(self, outro):
             return self.__nome == outro.__nome
@@ -57,40 +55,14 @@ class Missao:
         msg = f"Nome: {self.__nome}\n"
         msg += f"Descrição: {self.__descricao}\n"
         msg += f"Recompensa: {self.__recompensa}\n"
-        msg += f"Status: {self.__status.name}"
+        msg += f"Status: {self.estado.nome_status()}"
         return msg
 
     def iniciar_missao(self):
-        if self.__status == Status.PENDENTE:
-            self.__status = Status.EM_ANDAMENTO
-            print(f"A missão '{self.__nome}' começou! Objetivo: {self.__descricao}")
-        else:
-            print(f"A missão '{self.__nome}' não pode ser iniciada pois está com status: {self.__status.name}")
+        self.estado.iniciar()
 
     def concluir_missao(self, personagem):
-        if self.status != Status.EM_ANDAMENTO:
-            print(f"A missão '{self.nome}' não pode ser concluída pois está: {self.status.name}")
-            return False
-
-        atributo, valor = self.requisito
-
-        if getattr(personagem, atributo) >= valor:
-            self.status = Status.CONCLUIDA
-            personagem.xp += self.recompensa
-
-            print(f"Missão '{self.nome}' concluída! +{self.recompensa} XP")
-            return True
-        else:
-            dano = self.dano_falha()
-            personagem.vida = max(0, personagem.vida - dano)
-
-            print(f"Falhou na missão! -{dano} de vida")
-
-            if personagem.vida <= 0:
-                personagem.vida = 0
-                print("Você morreu")
-
-            return False
+        self.estado.concluir(personagem)
     
     def dano_falha(self):
         return 5 
