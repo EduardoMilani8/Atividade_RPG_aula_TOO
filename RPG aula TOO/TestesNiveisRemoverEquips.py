@@ -229,3 +229,11 @@ print(personagem)
 
 #     limpar equipamentos (buff OFF)
 #     verificar level up
+
+
+# import sys
+# import os
+
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# Esses comandos servem para adicionar e importar arquivos que estejam em outras pastas, nao no meu caso pois esta tudo no mesmo

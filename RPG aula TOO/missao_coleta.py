@@ -1,5 +1,4 @@
 from missao import Missao
-from status import Status
 
 class MissaoColeta(Missao):
     def __init__(self, nome, descricao, recompensa, item_necessario, quantidade):
